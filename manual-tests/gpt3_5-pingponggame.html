@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pingPongCanvas" width="800" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById("pingPongCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const player = {
+            x: 10,
+            y: canvas.height / 2 - 50,
+            width: 10,
+            height: 100,
+            speed: 10,
+            dy: 0
+        };
+
+        const ball = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            radius: 10,
+            speedX: 5,
+            speedY: 5
+        };
+
+        function draw() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw player
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            // Draw ball
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "#fff";
+            ctx.fill();
+            ctx.closePath();
+
+            // Update ball position
+            ball.x += ball.speedX;
+            ball.y += ball.speedY;
+
+            // Check collision with top and bottom walls
+            if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+                ball.speedY = -ball.speedY;
+            }
+
+            // Check collision with player
+            if (
+                ball.x - ball.radius < player.x + player.width &&
+                ball.x + ball.radius > player.x &&
+                ball.y - ball.radius < player.y + player.height &&
+                ball.y + ball.radius > player.y
+            ) {
+                ball.speedX = -ball.speedX;
+            }
+
+            // Check if player missed the ball
+            if (ball.x - ball.radius < 0) {
+                // Reset ball position
+                ball.x = canvas.width / 2;
+                ball.y = canvas.height / 2;
+                // Reset player position
+                player.y = canvas.height / 2 - 50;
+            }
+
+            // Move player
+            player.y += player.dy;
+
+            // Prevent player from going out of bounds
+            if (player.y < 0) {
+                player.y = 0;
+            } else if (player.y + player.height > canvas.height) {
+                player.y = canvas.height - player.height;
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "ArrowUp") {
+                player.dy = -player.speed;
+            } else if (event.key === "ArrowDown") {
+                player.dy = player.speed;
+            }
+        });
+
+        document.addEventListener("keyup", function (event) {
+            if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+                player.dy = 0;
+            }
+        });
+
+        draw();
+    </script>
+</body>
+</html>

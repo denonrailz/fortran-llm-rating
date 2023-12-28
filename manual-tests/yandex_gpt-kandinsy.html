@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Кандинский в JavaScript</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Генерация случайного цвета
+        function generateRandomColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+
+            return 'rgb(' + r + ',' + g + ',' + b + ')';
+        }
+
+        // Функция для рисования линий
+        function drawLine(startX, startY, endX, endY, color) {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.strokeStyle = color;
+            ctx.stroke();
+        }
+
+        // Создание изображения
+        function createImage() {
+            // Генерируем случайный цвет для заливки
+            const fillColor = generateRandomColor();
+
+            // Рисуем кандинского
+            for (let i = 0; i < 100; i++) {
+                const randomX = Math.random() * canvas.width;
+                const randomY = Math.random() * canvas.height;
+
+                // Генерируем случайные координаты для линий
+                const line1X1 = Math.random() * canvas.width + randomX;
+                const line1Y1 = Math.random() * canvas.height + randomY;
+                const line2X1 = Math.random() * canvas.width + line1X1;
+                const line2Y1 = Math.random() * canvas.height + line1Y1;
+                const line3X1 = Math.random() * canvas.width + line2X1;
+                const line3Y1 = Math.random() * canvas.height + line2Y1;
+
+                drawLine(randomX, randomY, line1X1, line1Y1, fillColor);
+                drawLine(line1X1, line1Y1, line2X1, line2Y1, 'black');
+                drawLine(line2X1, line2Y1, line3X1, line3Y1, 'red');
+            }
+        }
+
+        createImage();
+    </script>
+</body>
+</html>

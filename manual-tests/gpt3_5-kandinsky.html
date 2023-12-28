@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Картину в стиле Кандинского</title>
+</head>
+<body>
+    <canvas id="kandinskyCanvas" width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById("kandinskyCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Задайте фон
+        ctx.fillStyle = "#ffffff"; // белый цвет
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Начнем рисовать в стиле Кандинского
+        ctx.fillStyle = "#ff0000"; // красный цвет
+        ctx.beginPath();
+        ctx.arc(250, 250, 100, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#00ff00"; // зеленый цвет
+        ctx.beginPath();
+        ctx.arc(150, 150, 100, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#0000ff"; // синий цвет
+        ctx.beginPath();
+        ctx.arc(350, 150, 100, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#ffff00"; // желтый цвет
+        ctx.beginPath();
+        ctx.arc(150, 350, 100, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#ff00ff"; // фиолетовый цвет
+        ctx.beginPath();
+        ctx.arc(350, 350, 100, 0, Math.PI * 2);
+        ctx.fill();
+    </script>
+</body>
+</html>
